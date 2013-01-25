@@ -1,0 +1,40 @@
+﻿@model MVCJsonPost.Models.PersonModel
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Home</h2>
+
+<div>
+    @Html.LabelFor(m => m.First)
+    @Html.EditorFor(m => m.First)
+</div>
+
+<div>
+    @Html.LabelFor(m => m.Last)
+    @Html.EditorFor(m => m.Last)
+</div>
+
+<div>
+    @Html.LabelFor(m => m.FavoriteBands)
+    @Html.DropDownListFor(m => m.FavoriteBands, new SelectList(
+                  new List<Object>{ 
+                       new { value = 0 , text = "Justin Bieber"  },
+                       new { value = 1 , text = "Megadeath" },
+                       new { value = 2 , text = "Kenny Rogers"}
+                    },
+                  "value",
+                  "text",
+                   Model.FavoriteBands),
+                    new { multiple = "multiple" })
+
+
+</div>
+
+<div>
+    <input type="button" value="Bad Submit" id="bad" />
+    <input type="button" value="Good Submit" id="good" />
+</div>
+
+<label id="result"></label>
