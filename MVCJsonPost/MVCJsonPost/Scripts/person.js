@@ -21,7 +21,7 @@
             url: "Person/BadSave",
             dataType: 'json',
             type: "POST",
-            data: "first=" + request.First + "&last=" + request.Last + "&favoriteBands=" + request.FavoriteBands, //How do you even encode an array?? This doesn't even work right
+            data: "first=" + request.First + "&last=" + request.Last + "&favoriteBands=" + request.FavoriteBands, //How do you encode an array?? This doesn't even work right
             success: function (response) {
                 $("#result").text(response.result);
             }
