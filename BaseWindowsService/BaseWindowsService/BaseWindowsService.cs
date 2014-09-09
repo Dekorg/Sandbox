@@ -51,9 +51,9 @@ namespace BaseWindowsService
             {
                 //install
                 ServiceInstaller.InstallService(this.ServiceName);
-                
+
                 Console.WriteLine("Press enter to exit");
-                Console.ReadLine();                
+                Console.ReadLine();
                 Environment.Exit(0);
 
             }
@@ -61,34 +61,11 @@ namespace BaseWindowsService
             {
                 //uninstall
                 ServiceInstaller.UninstallService(this.ServiceName);
-             
+
                 Console.WriteLine("Press enter to exit");
                 Console.ReadLine();
                 Environment.Exit(0);
 
-            }
-        }
-
-        public void StartService(string[] args)
-        {
-            Logger.Log(string.Format("Starting {0} work thread.", this.ServiceName), TraceEventType.Information);
-            ThreadPool.QueueUserWorkItem(delegate
-            {
-                DoWork(args);
-            }, null);
-        }
-
-        public abstract void DoYourMagic(string[] args);
-
-        public void StopService()
-        {
-            int wait = Convert.ToInt32(ConfigurationManager.AppSettings["StopServiceWait"]);
-            Logger.Log(string.Format("Requesting {0} work thread stop.", this.ServiceName), TraceEventType.Information);
-            this.stopping = true;
-
-            if (!this.stoppedEvent.WaitOne(wait))
-            {
-                Logger.Log(string.Format("Requested {0} work thread stop timed out.", this.ServiceName), TraceEventType.Information);
             }
         }
 
@@ -100,6 +77,29 @@ namespace BaseWindowsService
         protected override void OnStop()
         {
             StopService();
+        }
+
+        protected abstract void DoYourMagic(string[] args);
+
+        private void StartService(string[] args)
+        {
+            Logger.Log(string.Format("Starting {0} work thread.", this.ServiceName), TraceEventType.Information);
+            ThreadPool.QueueUserWorkItem(delegate
+            {
+                DoWork(args);
+            }, null);
+        }
+
+        private void StopService()
+        {
+            int wait = Convert.ToInt32(ConfigurationManager.AppSettings["StopServiceWait"]);
+            Logger.Log(string.Format("Requesting {0} work thread stop.", this.ServiceName), TraceEventType.Information);
+            this.stopping = true;
+
+            if (!this.stoppedEvent.WaitOne(wait))
+            {
+                Logger.Log(string.Format("Requested {0} work thread stop timed out.", this.ServiceName), TraceEventType.Information);
+            }
         }
 
         private void DoWork(string[] args)

@@ -15,7 +15,7 @@ namespace MyWindowsService
 
         }
 
-        public override void DoYourMagic(string[] args)
+        protected override void DoYourMagic(string[] args)
         {
             //TODO: This is the code that will execute on the interval defined in ActionSleep
             throw new NotImplementedException();
