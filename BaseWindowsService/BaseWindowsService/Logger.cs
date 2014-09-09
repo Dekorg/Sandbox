@@ -12,7 +12,7 @@ namespace BaseWindowsService
         public static void Log(string message, TraceEventType severity)
         {
             //TODO: implement your logger here
-            throw new NotImplementedException();
+            Console.WriteLine(string.Format("{0}: {1}", Enum.GetName(typeof(TraceEventType), severity), message));
         }
     }
 }
