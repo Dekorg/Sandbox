@@ -9,24 +9,22 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.ServiceProcess;
-
 
 namespace BaseWindowsService
 {
-
-    public abstract partial class BaseWindowsService<T> : ServiceBase where T : BaseWindowsService.BaseWindowsService<T>, new()
+    public abstract partial class BaseWindowsService : ServiceBase
     {
         private bool stopping;
         private ManualResetEvent stoppedEvent = new ManualResetEvent(false);
 
-        public BaseWindowsService()
+        public BaseWindowsService(string[] args)
         {
             InitializeComponent();
             this.ServiceName = this.GetType().Name;
+            Register(args);
         }
 
-        public void Go(string[] args)
+        public void Register(string[] args)
         {
             if (args == null || args.Length == 0)
             {
@@ -34,29 +32,40 @@ namespace BaseWindowsService
                 ServiceBase[] ServicesToRun;
                 ServicesToRun = new ServiceBase[] 
                 { 
-                    new T() 
+                   this
                 };
                 ServiceBase.Run(ServicesToRun);
             }
             else if (args[0].Equals("debug", StringComparison.CurrentCultureIgnoreCase))
             {
-                // if debug arguments exist run as a console app (debugging)
-                T s = new T();
-                s.StartService(args);
+                // if debug arguments exist run as a console app (debugging)               
+                StartService(args);
 
                 Console.WriteLine("Press enter to exit");
                 Console.ReadLine();
 
-                s.StopService();
+                StopService();
                 Environment.Exit(0);
             }
             else if (args[0].Equals("i", StringComparison.CurrentCultureIgnoreCase))
             {
                 //install
+                ServiceInstaller.InstallService(this.ServiceName);
+                
+                Console.WriteLine("Press enter to exit");
+                Console.ReadLine();                
+                Environment.Exit(0);
+
             }
             else if (args[0].Equals("u", StringComparison.CurrentCultureIgnoreCase))
             {
                 //uninstall
+                ServiceInstaller.UninstallService(this.ServiceName);
+             
+                Console.WriteLine("Press enter to exit");
+                Console.ReadLine();
+                Environment.Exit(0);
+
             }
         }
 

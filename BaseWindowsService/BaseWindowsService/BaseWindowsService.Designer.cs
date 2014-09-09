@@ -1,7 +1,7 @@
 ﻿using System.ServiceProcess;
 namespace BaseWindowsService
 {
-    partial class BaseWindowsService<T> : ServiceBase
+    partial class BaseWindowsService : ServiceBase
     {
         /// <summary> 
         /// Required designer variable.

@@ -53,7 +53,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
@@ -71,6 +73,7 @@
     <Compile Include="BaseWindowsService.Designer.cs">
       <DependentUpon>BaseWindowsService.cs</DependentUpon>
     </Compile>
+    <Compile Include="ServiceInstaller.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
