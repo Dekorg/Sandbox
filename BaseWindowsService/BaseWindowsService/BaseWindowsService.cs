@@ -15,6 +15,7 @@ namespace BaseWindowsService
     public abstract partial class BaseWindowsService : ServiceBase
     {
         private bool stopping;
+        private bool sleeping;
         private ManualResetEvent stoppedEvent = new ManualResetEvent(false);
 
         public BaseWindowsService(string[] args)
@@ -41,7 +42,7 @@ namespace BaseWindowsService
                 // if debug arguments exist run as a console app (debugging)               
                 StartService(args);
 
-                Console.WriteLine("Press enter to exit");
+                Console.WriteLine("Press enter to stop service");
                 Console.ReadLine();
 
                 StopService();
@@ -96,7 +97,13 @@ namespace BaseWindowsService
             Logger.Log(string.Format("Requesting {0} work thread stop.", this.ServiceName), TraceEventType.Information);
             this.stopping = true;
 
-            if (!this.stoppedEvent.WaitOne(wait))
+            //if we are sleeping , just kill it
+            if (this.sleeping)
+            {
+                Logger.Log(string.Format("Stopping {0} work thread.", this.ServiceName), TraceEventType.Information);
+                this.stoppedEvent.Set();
+            }
+            else if (!this.stoppedEvent.WaitOne(wait))
             {
                 Logger.Log(string.Format("Requested {0} work thread stop timed out.", this.ServiceName), TraceEventType.Information);
             }
@@ -109,7 +116,10 @@ namespace BaseWindowsService
             while (!this.stopping)
             {
                 DoYourMagic(args);
+
+                sleeping = true;
                 Thread.Sleep(wait);
+                sleeping = false;
             }
 
             Logger.Log(string.Format("Stopping {0} work thread.", this.ServiceName), TraceEventType.Information);
