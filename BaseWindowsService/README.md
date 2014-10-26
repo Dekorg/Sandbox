@@ -12,5 +12,5 @@ In you app.config, you can define the value for ActionSleep which is the interva
 Handy argument switches:
 
 MyWindowsService.exe DEBUG - Runs as a console app for debugging.
-MyWindowsService.exe I -Installs the service using SC.exe CREATE
-MyWindowsService.exe U -Uninstalls the service using SC.exe DELETE
+MyWindowsService.exe I -Installs the service using SC.exe CREATE.
+MyWindowsService.exe U -Uninstalls the service using SC.exe DELETE.
