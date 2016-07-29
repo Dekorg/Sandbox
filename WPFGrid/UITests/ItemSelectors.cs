@@ -27,7 +27,7 @@ namespace UITests
         #region Main Window
         public static Window MainWindow(Application application)
         {
-            return application.GetWindow("MainWindow", InitializeOption.NoCache);
+            return application.GetWindow("WPFGrid", InitializeOption.NoCache);
         }
 
         #region Buttons

@@ -26,7 +26,29 @@ namespace UITests
         [TestMethod]
         public void UI_DeleteUser()
         {
+            //Get the app
+            Application application = ItemSelectors.GetWPFGridApp();
 
+            //Find the main window
+            Window mainWindow = ItemSelectors.MainWindow(application);
+
+            //Get grid to interact with it
+            ListView mainGrid = mainWindow.Get<ListView>(ItemSelectors.MainGrid);
+
+            //Select a row
+            mainGrid.Rows[0].Cells[0].Click();
+
+            //Delete it
+            mainWindow.Get<Button>(ItemSelectors.DeleteButtonFinder).Click();
+
+            //Make sure it's gone
+            mainGrid.Rows.Count.Should().Equals(0);
+
+            //sleep for demo
+            Thread.Sleep(1500);
+
+            //close the app
+            application.Kill();
         }
 
         [TestMethod]
@@ -37,7 +59,7 @@ namespace UITests
 
             //Find the main window
             Window mainWindow = ItemSelectors.MainWindow(application);
-                     
+
             //Get grid to interact with it
             ListView mainGrid = mainWindow.Get<ListView>(ItemSelectors.MainGrid);
 
@@ -55,7 +77,7 @@ namespace UITests
             mainGrid.Rows[0].Cells[0].Click();
 
             //sleep for demo
-            Thread.Sleep(2000);
+            Thread.Sleep(1500);
 
             //Check new states
             editButton.Enabled.Should().BeTrue();
