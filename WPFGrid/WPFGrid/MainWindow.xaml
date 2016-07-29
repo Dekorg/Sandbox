@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFGrid"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800"
+        Title="WPFGrid" Height="600" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
         <Grid.RowDefinitions>

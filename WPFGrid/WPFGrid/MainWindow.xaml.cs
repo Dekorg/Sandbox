@@ -69,9 +69,11 @@ namespace WPFGrid
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            EditPerson editModal = new EditPerson((Person)MainGrid.SelectedItem);
+            Person personToEdit = (Person)MainGrid.SelectedItem;
+            EditPerson editModal = new EditPerson(personToEdit);
             editModal.ShowDialog();
-            MainGrid.Items.Refresh();
+            MainGrid.SelectedIndex = -1;
+
         }
 
         private void MainGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
