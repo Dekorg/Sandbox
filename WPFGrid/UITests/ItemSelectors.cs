@@ -54,8 +54,8 @@ namespace UITests
         #endregion
 
         #region Textboxes
-        public static SearchCriteria FirstNameTextboxFinder = SearchCriteria.ByControlType(ControlType.Text).AndAutomationId("FirstNameTextbox");
-        public static SearchCriteria LastNameTextboxFinder = SearchCriteria.ByControlType(ControlType.Text).AndAutomationId("LastNameTextbox");
+        public static SearchCriteria FirstNameTextboxFinder = SearchCriteria.ByAutomationId("FirstNameTextbox");
+        public static SearchCriteria LastNameTextboxFinder = SearchCriteria.ByAutomationId("LastNameTextbox");
         #endregion
 
         #endregion

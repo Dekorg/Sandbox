@@ -14,13 +14,78 @@ namespace UITests
         [TestMethod]
         public void UI_EditUser()
         {
+            Application application = ItemSelectors.GetWPFGridApp();
 
+            //Find the main window
+            Window mainWindow = ItemSelectors.MainWindow(application);
+
+            //Select Item to edit
+            ListView mainGrid = mainWindow.Get<ListView>(ItemSelectors.MainGrid);
+
+            //Select the first row
+            mainGrid.Rows[0].Cells[0].Click();
+
+            //click edit button
+            mainWindow.Get<Button>(ItemSelectors.EditButtonFinder).Click();
+
+            //Find modal window
+            Window editModalWindow = ItemSelectors.EditModal(application);
+
+            //set new person name
+            editModalWindow.Get<TextBox>(ItemSelectors.FirstNameTextboxFinder).SetValue("Bob");
+            editModalWindow.Get<TextBox>(ItemSelectors.LastNameTextboxFinder).SetValue("Norris");
+
+            //sleep for demo
+            Thread.Sleep(1500);
+
+            //click save
+            editModalWindow.Get<Button>(ItemSelectors.SaveButtonFinder).Click();
+       
+            mainGrid.Rows[0].Cells[1].Text.Should().Be("Bob");
+            mainGrid.Rows[0].Cells[2].Text.Should().Be("Norris");
+
+            //sleep for demo
+            Thread.Sleep(1500);
+
+            //close the app
+            application.Kill();
         }
 
         [TestMethod]
         public void UI_AddUser()
         {
+            Application application = ItemSelectors.GetWPFGridApp();
 
+            //Find the main window
+            Window mainWindow = ItemSelectors.MainWindow(application);
+
+            //click add button
+            mainWindow.Get<Button>(ItemSelectors.AddButtonFinder).Click();
+
+            //Find modal window
+            Window editModalWindow = ItemSelectors.EditModal(application);
+
+            //set new person name
+            editModalWindow.Get<TextBox>(ItemSelectors.FirstNameTextboxFinder).SetValue("Bob");
+            editModalWindow.Get<TextBox>(ItemSelectors.LastNameTextboxFinder).SetValue("Norris");
+
+            //sleep for demo
+            Thread.Sleep(1500);
+
+            //click save
+            editModalWindow.Get<Button>(ItemSelectors.SaveButtonFinder).Click();
+
+            //Check for result in grid
+            ListView mainGrid = mainWindow.Get<ListView>(ItemSelectors.MainGrid);
+
+            mainGrid.Rows[mainGrid.Items.Count - 1].Cells[1].Text.Should().Be("Bob");
+            mainGrid.Rows[mainGrid.Items.Count - 1].Cells[2].Text.Should().Be("Norris");
+
+            //sleep for demo
+            Thread.Sleep(1500);
+
+            //close the app
+            application.Kill();
         }
 
         [TestMethod]
